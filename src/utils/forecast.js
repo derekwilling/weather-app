@@ -14,7 +14,7 @@ const forecast = (latitude, longitude, callback) => {
         } else if  (body.code === 400) {
             callback('The co-ordinates provided were invalid.', undefined)
         } else {
-            callback(undefined, `${body.daily.data[0].summary} It is currently ${body.currently.temperature} degrees out. There is ${body.currently.precipProbability} chance of rain.`)
+            callback(undefined, `${body.daily.data[0].summary} It is currently ${body.currently.temperature} degrees out. There is ${body.currently.precipProbability} chance of rain. Tomorrow: ${body.daily.data[1].summary}`)
         }
     })
 }
