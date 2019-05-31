@@ -11,6 +11,9 @@ const weatherForm = document.querySelector('form')
 const messageOne = document.querySelector('#message-1')
 const messageTwo = document.querySelector('#message-2')
 
+const windyAPIkey = 'SZsZn7qVAMtzb1H0IrkeESFx6FaIgGik'
+const mapboxAPIkey = 'pk.eyJ1IjoiZGlydHlzb2MiLCJhIjoiY2p1MW1rbXp2MDM3djQzbG8wZDMweWJrcyJ9.Ci4FbZRJdLzZ1hZ96meH-w'
+
 weatherForm.addEventListener("submit", (e) => {
     e.preventDefault()
 
@@ -26,7 +29,29 @@ weatherForm.addEventListener("submit", (e) => {
                 messageOne.textContent = data.location
                 messageTwo.textContent = data.forecast
             }
+
+            // Initialize Windy API
+            windyInit({
+                key: windyAPIkey,
+                lat: data.latitude,
+                lon: data.longitude,
+                zoom: 7,
+                overlay: 'rain'
+            }, windyAPI => {
+                const { map } = windyAPI
+
+                map.setView([
+                    data.longitude,
+                    data.latitude
+                ])
+
+                L.popup()
+                    .setLatLng([data.longitude, data.latitude])
+                    .setContent(data.location)
+                    .openOn(map);
+
+            })
         })
     })
-
 })
+
