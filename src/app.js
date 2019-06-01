@@ -1,11 +1,12 @@
 const path = require('path')
+const sslRedirect = require('heroku-ssl-redirect')
 const express = require('express')
 const hbs = require('hbs')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 // Define paths for express config
 const publicPath = path.join(__dirname, '../public')
@@ -19,6 +20,9 @@ hbs.registerPartials(partialsPath)
 
 // Configure static directory to serve
 app.use(express.static(publicPath))
+
+// Configure app to redirect http to https traffic
+app.use(sslRedirect())
 
 app.get('/', (req, res) => {
     res.render('index', {

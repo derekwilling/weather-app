@@ -55,3 +55,15 @@ weatherForm.addEventListener("submit", (e) => {
     })
 })
 
+if ("geolocation" in navigator) {
+    /* geolocation is available */
+    navigator.geolocation.getCurrentPosition(data => {
+        console.log('Data ', data)
+    }, error => {
+        console.log('Error ', error)
+    })
+  } else {
+    /* geolocation IS NOT available */
+    console.log(`Geolocation not availible in this browser.`)
+  }
+
